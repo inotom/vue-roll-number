@@ -1,6 +1,6 @@
 {
   "name": "@inotom/vue-roll-number",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/hello-vue.umd.js",
   "cdn": "dist/hello-vue.min.js",
