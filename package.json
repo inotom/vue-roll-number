@@ -1,16 +1,16 @@
 {
   "name": "@inotom/vue-roll-number",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
-  "main": "dist/hello-vue.umd.js",
-  "cdn": "dist/hello-vue.min.js",
+  "main": "dist/vue-roll-number.umd.js",
+  "cdn": "dist/vue-roll-number.min.js",
   "config": {
     "dist_dir": "dist",
     "src_dir": "src"
   },
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
-    "prebuild": "rimraf $npm_package_config_dist_dir/hello-vue.* && npm run clean && npm test",
+    "prebuild": "rimraf $npm_package_config_dist_dir/vue-roll-number.* && npm run clean && npm test",
     "build": "NODE_ENV=production webpack -p --config config/webpack.prod.js",
     "clean": "rimraf '**/.DS_Store'",
     "lint": "eslint $npm_package_config_src_dir",
