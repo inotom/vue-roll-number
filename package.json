@@ -1,0 +1,57 @@
+{
+  "name": "@inotom/vue-roll-number",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/hello-vue.umd.js",
+  "cdn": "dist/hello-vue.min.js",
+  "config": {
+    "dist_dir": "dist",
+    "src_dir": "src"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
+    "prebuild": "rimraf $npm_package_config_dist_dir/hello-vue.* && npm run clean && npm test",
+    "build": "NODE_ENV=production webpack -p --config config/webpack.prod.js",
+    "clean": "rimraf '**/.DS_Store'",
+    "lint": "eslint $npm_package_config_src_dir",
+    "prettier": "prettier --write 'src/**/*.js'",
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inotom/vue-roll-number.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "inotom (http://www.serendip.ws/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inotom/vue-roll-number/issues"
+  },
+  "homepage": "https://github.com/inotom/vue-roll-number#readme",
+  "devDependencies": {
+    "@babel/core": "7.5.4",
+    "@babel/preset-env": "7.5.4",
+    "autoprefixer": "9.6.1",
+    "babel-eslint": "10.0.2",
+    "babel-loader": "8.0.6",
+    "css-loader": "3.0.0",
+    "eslint": "6.0.1",
+    "eslint-plugin-vue": "5.2.3",
+    "node-sass": "4.12.0",
+    "postcss-loader": "3.0.0",
+    "prettier": "1.18.2",
+    "rimraf": "2.6.3",
+    "sass-loader": "7.1.0",
+    "style-loader": "0.23.1",
+    "terser-webpack-plugin": "1.3.0",
+    "vue": "2.6.10",
+    "vue-loader": "15.7.0",
+    "vue-template-compiler": "2.6.10",
+    "webpack": "4.35.3",
+    "webpack-cli": "3.3.5",
+    "webpack-dev-server": "3.7.2",
+    "webpack-merge": "4.2.1"
+  }
+}
