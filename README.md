@@ -2,10 +2,11 @@
 
 Number changing animation Vue.js component.
 
+From v2.0.0, it works for Vue 3.
 
 ## Demo
 
-[Demo](http://sandbox.serendip.ws/vue-roll-number.html)
+[Demo](https://sandbox.serendip.ws/vue-roll-number.html)
 
 
 ## Install
@@ -13,15 +14,15 @@ Number changing animation Vue.js component.
 ### Browser
 
 ```html
-<script src="vue.js"></script>
-<script src="vue-roll-number.min.js"></script>
+<script src="vue.global.prod.js"></script>
+<script src="vue-roll-number.umd.js"></script>
 ```
 
 
 ### npm
 
 ```
-npm install --D @inotom/vue-roll-number
+npm install --save @inotom/vue-roll-number
 ```
 
 
@@ -34,32 +35,30 @@ npm install --D @inotom/vue-roll-number
   <roll-number number-value="1,920" />
 </div>
 
-<script src="vue.js"></script>
-<script src="vue-roll-number.min.js"></script>
+<script src="vue.global.prod.js"></script>
+<script src="vue-roll-number.umd.js"></script>
 <script>
-Vue.use(RollNumber);
-new Vue({
-  el: '#app'
-});
+const { createApp } = Vue;
+const { RollNumber } = SwsVueRollNumber;
+
+createApp({
+  components: {
+    RollNumber,
+  },
+}).mount('#app');
 </script>
 ```
 
 
-### SFC
+### SFC (TypeScript)
 
 ```vue
 <template>
   <roll-number number-value="1,920" />
 </template>
 
-<script>
-import RollNumber from '@inotom/vue-roll-number';
-
-export default {
-  components: {
-    RollNumber,
-  }
-}
+<script setup lang="ts">
+import { RollNumber } from '@inotom/vue-roll-number';
 </script>
 ```
 
