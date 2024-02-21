@@ -1,3 +1,81 @@
+<script setup lang="ts">
+import { ref, watch } from 'vue';
+
+interface Props {
+  numberValue: string;
+  animDuration?: number;
+  animInterval?: number;
+  blockName?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  animDuration: 3000,
+  animInterval: 10,
+  blockName: 'roll-number',
+});
+
+const isAnimation = ref(false);
+const currentNumber = ref(props.numberValue);
+const intervalID = ref(-1);
+
+const initialize = () => {
+  if (isAnimation.value) {
+    return;
+  }
+
+  isAnimation.value = true;
+
+  let totalTime = 0;
+
+  intervalID.value = window.setInterval(() => {
+    totalTime += props.animInterval;
+
+    let newNumber = '';
+
+    for (let i = 0; i < props.numberValue.length; i++) {
+      if (isUpdateTime(i, totalTime)) {
+        newNumber += props.numberValue[i];
+      } else if (isSeparator(i)) {
+        newNumber += props.numberValue[i];
+      } else {
+        newNumber += `${getRandomInt(0, 9)}`;
+      }
+    }
+
+    currentNumber.value = newNumber;
+
+    if (totalTime > props.animDuration) {
+      window.clearInterval(intervalID.value);
+      isAnimation.value = false;
+    }
+
+  }, props.animInterval)
+};
+
+const isUpdateTime = (index: number, totalTime: number): boolean => {
+  const interval = props.numberValue.length;
+  return props.animDuration - (props.animInterval * (index + 1) * interval) < totalTime;
+};
+
+const isSeparator = (index: number): boolean => {
+  return !Number.isInteger(parseInt(props.numberValue[index], 10));
+};
+
+const getRandomInt = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+// Using getter function.
+// https://ja.vuejs.org/guide/essentials/watchers#watch-source-types
+watch(() => props.numberValue, (newNumber, oldNumber) => {
+  if (newNumber !== oldNumber) {
+    initialize();
+  }
+});
+
+initialize();
+</script>
+
 <template>
   <span
     :class="blockName"
@@ -6,99 +84,3 @@
     {{ currentNumber }}
   </span>
 </template>
-
-<script>
-export default {
-  props: {
-    numberValue: {
-      type: String,
-      required: true,
-    },
-
-    animDuration: {
-      type: Number,
-      default: 3000,
-    },
-
-    animInterval: {
-      type: Number,
-      default: 10,
-    },
-
-    blockName: {
-      type: String,
-      default: 'roll-number',
-    },
-  },
-
-  data() {
-    return {
-      isAnimation: false,
-      currentNumber: this.numberValue,
-      intervalID: -1,
-    };
-  },
-
-  watch: {
-    numberValue(newNumber, oldNumber) {
-      if (newNumber !== oldNumber) {
-        this.initialize();
-      }
-    },
-  },
-
-  created() {
-    this.initialize();
-  },
-
-  methods: {
-    initialize() {
-
-      if (this.isAnimation) {
-        return;
-      }
-
-      this.isAnimation = true;
-
-      let totalTime = 0;
-
-      this.intervalID = setInterval(() => {
-        totalTime += this.animInterval;
-
-        let newNumber = '';
-
-        for (let i = 0; i < this.numberValue.length; i++) {
-          if (this.isUpdateTime(i, totalTime)) {
-            newNumber += this.numberValue[i];
-          } else if (this.isSeparator(i)) {
-            newNumber += this.numberValue[i];
-          } else {
-            newNumber += this.getRandomInt(0, 9) + '';
-          }
-        }
-
-        this.currentNumber = newNumber;
-
-        if (totalTime > this.animDuration) {
-          clearInterval(this.intervalID);
-          this.isAnimation = false;
-        }
-
-      }, this.animInterval);
-    },
-
-    isUpdateTime(index, totalTime) {
-      const interval = this.numberValue.length;
-      return this.animDuration - (this.animInterval * (index + 1) * interval) < totalTime;
-    },
-
-    isSeparator(index) {
-      return !Number.isInteger(parseInt(this.numberValue[index], 10));
-    },
-
-    getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    },
-  },
-};
-</script>
